@@ -7,7 +7,7 @@
             _.bindAll(this, 'render', 'unrender', 'remove', 'onMove'); 
             $this = this;
             
-            this.collection.bind('change:to', this.onMove);
+            this.model.bind('change:to', this.onMove);
             
             $($this.el).draggable({
                 scroll: false,
@@ -20,6 +20,8 @@
                     pawnID = $(this).attr("id");
                     from = $(this).parent().attr("id");
                     
+                    console.log(pawnModel.get('y'));
+                    
                     pawnModel.set({from: from});
 		        }
             });
@@ -28,8 +30,6 @@
         },
 
         render: function () {
-            this.collection.add(this.model);
-            
             $(this.el).attr({
                 'id': this.model.cid,
                 'class': this.model.get('class'),
@@ -43,10 +43,10 @@
             var html;
             
             if (this.model.isValidSingleMove()) {
-                html = '[' + App.player + '] From #' + this.get('from') + ' To #' + this.get('to');
+                html = '[' + this.model.cid + '] From #' + this.model.get('x') + ' To' + this.model.parentID();
             }
             else {
-                 html = 'Invalid move';
+                html = 'Invalid move';
             }
             
             var p = $('<p>', {
