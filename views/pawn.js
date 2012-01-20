@@ -11,18 +11,19 @@
             
             $($this.el).draggable({
                 scroll: false,
+                
                 zIndex: 1000,
+                
                 revert: "invalid",
+                
                 containment: "#game",
+                
                 start: function() {
-                    var from, pawnID, pawnModel = $this.model;
-                            
-                    pawnID = $(this).attr("id");
-                    from = $(this).parent().attr("id");
+                    var pawnID = $(this).attr("id"), 
+                        pawnModel = Collections.Pawns.getByCid(pawnID),
+                        from = pawnModel.get('to') || $(this).parent().attr("id");
                     
-                    console.log(pawnModel.get('y'));
-                    
-                    pawnModel.set({from: from});
+                    pawnModel.set({from: to || from});
 		        }
             });
             
@@ -40,14 +41,7 @@
         },
         
         onMove: function () {
-            var html;
-            
-            if (this.model.isValidSingleMove()) {
-                html = '[' + this.model.cid + '] From #' + this.model.get('x') + ' To' + this.model.parentID();
-            }
-            else {
-                html = 'Invalid move';
-            }
+            var p, html = '[' + this.model.cid + '] From #' + this.model.get('from') + ' To ' + this.model.get('to');
             
             var p = $('<p>', {
                 html: html

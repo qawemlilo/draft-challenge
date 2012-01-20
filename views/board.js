@@ -25,10 +25,10 @@
         },
         
         createRow: function (row_counter) {
-            var row = $('<tr>'), td = $('<td>'), $this = this, column_counter, cell, player = $this.model.get('player'), opponent, pawn;
+            var row = $('<tr>'), $this = this, td, column_counter, cell, player = $this.model.get('player'), opponent, pawn;
             
             for (column_counter = 7; column_counter >= 0; column_counter--) {
-                var td = $('<td>')
+                td = $('<td>');   
                 cell = $this.createCell(row_counter, column_counter);  
                 
                 if (row_counter < 3 && cell.model.get('class') === 'black_div') {
@@ -39,19 +39,20 @@
                     }
                     
                     pawn = $this.createPawn(row_counter, column_counter, opponent); 
-                    $(cell.render().el).append(pawn);
+                    $(cell.render().el).append(pawn.render().el);
                     
                     cell.model.set({'player': opponent});
                 }
                 
                 if (row_counter > 4 && cell.model.get('class') === 'black_div') { 
                     pawn = $this.createPawn(row_counter, column_counter, player); 
-                    $(cell.render().el).append(pawn);
+                    $(cell.render().el).append(pawn.render().el);
                     
                     cell.model.set({'player': player});
                 }
                 
                 $this.collection.add(cell.model);
+                
                 $(td).append(cell.render().el);
                 $(row).append(td);
             }
@@ -62,13 +63,12 @@
         createCell: function (row_counter, column_counter) {
             var model, modelView,
                 row_key = this.model.getRowKey(row_counter),
-                classname = this.model.getClass(row_counter, column_counter),
-                id = column_counter + row_key;
+                classname = this.model.getClass(row_counter, column_counter);
             
             model = new Models.Cell({
                 'x': row_key,
                 'y': column_counter,
-                'id': id,
+                'id': column_counter + row_key,
                 'class': classname
             });
             
@@ -81,13 +81,12 @@
         
         createPawn: function (row_counter, column_counter, player) {
             var model, modelView,
-                row_key = this.model.getRowKey(row_counter),
-                from = column_counter + row_key,
+                row_key = this.model.getRowKey(row_counter);
             
             model = new Models.Pawn({
                 'x': row_key,
                 'y': column_counter,
-                'from': from,
+                'from': column_counter + row_key,
                 'class': 'pown ' + player,
                 'src': 'images/' + player + '.png',
                 'color': 'images/' + player + '.png'
@@ -95,7 +94,7 @@
             
             modelView = new Views.Pawn({
                 model: model
-            }).render().el;
+            });
             
             Collections.Pawns.add(model);
             

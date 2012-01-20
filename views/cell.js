@@ -10,18 +10,20 @@
             
             $($this.el).droppable({
                 accept: '.pown',
+                
                 hoverClass: 'yellow',
+                
                 drop: function(event, ui) {
-                    var from, pawnID, pawnModel;
- 
+                    var from, pawnID, pawnModel, to = $(this).attr('id');
+
                     pawnModel = $(ui.draggable).data("backbone-view").model;
+
+                    //if ($this.model.getPlayer()) {
+                        //$('#' + pawnModel.cid).draggable({revert: true});
+                        //return;
+                    //}
                     
-                    if ($this.model.getPlayer()) {
-                        $('#' + pawnModel.cid).draggable({revert: true});
-                        return;
-                    }
-                    
-                    pawnModel.set({to: $this.model.getID()});
+                    pawnModel.set({to: to});
 		        }
             });
             

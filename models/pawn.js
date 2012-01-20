@@ -11,11 +11,15 @@
         },
         
         isValidSingleMove: function () {
-            var from = this.createObj('from'), 
-                to = this.createObj('to');
+            var that = this, 
+                alph_lookup = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7},
+                num_lookup = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
+                from = that.createObj('from'), 
+                to = that.createObj('to');
 
-            return ( from.y === (to.y + 1) || to.y === (from - 1) &&
-                     to.x === this.getRowKey(from.y + 1) );
+            return ((to.y === (from.y + 1) || to.y === (from.y - 1)) &&
+                   ((to.x === num_lookup[ alph_lookup[ from.x ]  + 1 ] && that.get('color') === 'white') ||
+                   (to.x === num_lookup[ alph_lookup[ from.x ] - 1 ] && that.get('color') === 'red')));
         },
         
         toImageString: function () {
