@@ -11,8 +11,8 @@
         },
         
         isValidSingleMove: function () {
-            var from = this.toObj('from'), 
-                to = this.toObj('to');
+            var from = this.createObj('from'), 
+                to = this.createObj('to');
 
             return ( from.y === (to.y + 1) || to.y === (from - 1) &&
                      to.x === this.getRowKey(from.y + 1) );

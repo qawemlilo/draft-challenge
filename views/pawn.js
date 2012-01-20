@@ -4,8 +4,10 @@
         tagName: 'img',
         
         initialize: function () {
-            _.bindAll(this, 'render', 'unrender', 'remove'); 
+            _.bindAll(this, 'render', 'unrender', 'remove', 'onMove'); 
             $this = this;
+            
+            this.collection.bind('change:to', this.onMove);
             
             $($this.el).draggable({
                 scroll: false,
@@ -37,6 +39,23 @@
             return this;
         },
         
+        onMove: function () {
+            var html;
+            
+            if (this.model.isValidSingleMove()) {
+                html = '[' + App.player + '] From #' + this.get('from') + ' To #' + this.get('to');
+            }
+            else {
+                 html = 'Invalid move';
+            }
+            
+            var p = $('<p>', {
+                html: html
+            });
+            
+            $('#mypanel').append(p);
+        },
+
         remove: function () {
             this.model.destroy();
         },

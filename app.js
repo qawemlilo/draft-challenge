@@ -1,4 +1,5 @@
 var App = {
+
     Collections: {},
     
     Models : {},
@@ -21,5 +22,4 @@ var App = {
 
 $(function () {
     App.initialize();
-    console.log(App.Collections.Pawns);
 });
