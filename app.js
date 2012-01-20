@@ -8,6 +8,7 @@ var App = {
     
     initialize: function () {
         App.Collections.Pawns = new App.Collections.Pawns();
+        App.Views.Panel = new App.Views.Panel();
         
         var cells = new App.Collections.Cells();
         

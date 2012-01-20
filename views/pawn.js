@@ -23,7 +23,7 @@
                         pawnModel = Collections.Pawns.getByCid(pawnID),
                         from = pawnModel.get('to') || $(this).parent().attr("id");
                     
-                    pawnModel.set({from: to || from});
+                    pawnModel.set({from: from});
 		        }
             });
             
@@ -41,13 +41,9 @@
         },
         
         onMove: function () {
-            var p, html = '[' + this.model.cid + '] From #' + this.model.get('from') + ' To ' + this.model.get('to');
+            var html = '[' + this.model.cid + '] From #' + this.model.get('from') + ' To ' + this.model.get('to');
             
-            var p = $('<p>', {
-                html: html
-            });
-            
-            $('#mypanel').append(p);
+            Views.Panel.echo(html);
         },
 
         remove: function () {
