@@ -7,16 +7,9 @@ var App = {
     Views : {},
     
     initialize: function () {
-        App.Collections.Pawns = new App.Collections.Pawns();
-        App.Views.Panel = new App.Views.Panel();
-        
-        var cells = new App.Collections.Cells();
-        
         var board = new App.Views.Board({
-        
             model: new App.Models.Board(),
-            
-            collection: cells
+            collection: new App.Collections.Cells()
         });
     }
 };

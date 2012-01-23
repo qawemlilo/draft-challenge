@@ -1,5 +1,5 @@
 (function (Views) {     
-    Views.Panel = Backbone.View.extend({
+    var Panel = Backbone.View.extend({
     
         el: $('#mypanel'),
         
@@ -20,4 +20,6 @@
             $(this.el).append(p);
         }
     });
+    
+    Views.Panel = new Panel();
 }(App.Views));
