@@ -3,13 +3,19 @@
     
         tagName: 'img',
         
+        events: {
+            "dblclick":  "remove"
+        },
+        
         initialize: function () {
             _.bindAll(this, 'render', 'unrender', 'remove', 'onMove'); 
             $this = this;
             
+            this.model.bind('remove', this.unrender);
             this.model.bind('change:to', this.onMove);
             
-            $($this.el).draggable({
+            $(this.el).draggable({
+            
                 scroll: false,
                 
                 zIndex: 1000,
@@ -24,7 +30,7 @@
                         from = pawnModel.get('to') || $(this).parent().attr("id");
                     
                     pawnModel.set({from: from});
-		        }
+                }
             });
             
             $($this.el).data("backbone-view", $this);
@@ -41,9 +47,17 @@
         },
         
         onMove: function () {
-            var html = '[' + this.model.cid + '] From #' + this.model.get('from') + ' To ' + this.model.get('to');
+            var $this = this, html;
             
-            Views.Panel.echo(html);
+            $($this.el).draggable({revert: 'invalid'});
+            
+            if (this.model.isValidSingleMove()) {
+                html = '[' + $this.model.cid + '] From #' + $this.model.get('from') + ' To ' + $this.model.get('to');
+                Views.Panel.echo(html);
+            }
+            else {
+                $($this.el).draggable({revert: true});
+            }                 
         },
 
         remove: function () {

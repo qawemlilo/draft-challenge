@@ -6,7 +6,7 @@
         initialize: function () {
             _.bindAll(this, 'render'); // fixes loss of context for 'this' within methods
 
-            this.model.set({name: 'Que'});
+            this.model.set({name: 'Que', second_player: 'Opponent'});
 
             this.render();
         },
@@ -89,14 +89,14 @@
                 'from': column_counter + row_key,
                 'class': 'pown ' + player,
                 'src': 'images/' + player + '.png',
-                'color': 'images/' + player + '.png'
+                'color': player
             });
+            
+            Collections.Pawns.add(model);
             
             modelView = new Views.Pawn({
                 model: model
             });
-            
-            Collections.Pawns.add(model);
             
             return modelView;
         }

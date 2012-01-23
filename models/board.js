@@ -3,7 +3,7 @@
         defaults: {
             'player': 'red',
             'name': '',
-            'second_payer': '',            
+            'second_player': '',            
         },
         
         getClass: function(x, y) {
